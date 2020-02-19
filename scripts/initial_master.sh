@@ -11,10 +11,16 @@ docker load -i ../images/coredns-1.6.5.tar
 docker load -i ../images/etcd-3.4.3-0.tar
 docker load -i ../images/pause-3.1.tar
 
-docker load -i ../images/cni-v3.10.3.tar
-docker load -i ../images/pod2daemon-flexvol-v3.10.3.tar
-docker load -i ../images/node-v3.10.3.tar
-docker load -i ../images/kube-controllers-v3.10.3.tar
+docker load -i ../images/calico-cni-v3.10.3.tar
+docker load -i ../images/calico-pod2daemon-flexvol-v3.10.3.tar
+docker load -i ../images/calico-node-v3.10.3.tar
+docker load -i ../images/calico-kube-controllers-v3.10.3.tar
+
+docker load -i ../images/nginx-ingress-controller-0.29.0.tar
+docker load -i ../images/kubernetesui-dashboard-v2.0.0-rc5.tar
+docker load -i ../images/kubernetesui-metrics-scraper-v1.0.3.tar
+
+
 
 if [ ${#POD_SUBNET} -eq 0 ] || [ ${#APISERVER_NAME} -eq 0 ]; then
   echo -e "\033[31;1m请确保您已经设置了环境变量 POD_SUBNET 和 APISERVER_NAME \033[0m"
@@ -54,3 +60,11 @@ rm -f calico.yaml
 cp ../plugins/calico-v3.10.3.yaml ./calico.yaml
 sed -i "s#192\.168\.0\.0/16#${POD_SUBNET}#" calico.yaml
 kubectl apply -f calico.yaml
+
+# 安装 nginx ingress controll
+echo "安装nginx ingress controll"
+kubectl apply -f ../plugins/ingress-nginx-v0.29.0.yaml
+
+# 安装 Dashboard
+echo "安装 Dashboard"
+kubectl apply -f ../plugins/dashboard-v2.0.0-rc5.yaml
