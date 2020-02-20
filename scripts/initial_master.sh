@@ -3,23 +3,7 @@
 set -e
 
 # 导入镜像
-docker load -i ../images/kube-controller-manager-v1.17.1.tar
-docker load -i ../images/kube-apiserver-v1.17.1.tar
-docker load -i ../images/kube-scheduler-v1.17.1.tar
-docker load -i ../images/kube-proxy-v1.17.1.tar
-docker load -i ../images/coredns-1.6.5.tar
-docker load -i ../images/etcd-3.4.3-0.tar
-docker load -i ../images/pause-3.1.tar
-
-docker load -i ../images/calico-cni-v3.10.3.tar
-docker load -i ../images/calico-pod2daemon-flexvol-v3.10.3.tar
-docker load -i ../images/calico-node-v3.10.3.tar
-docker load -i ../images/calico-kube-controllers-v3.10.3.tar
-
-docker load -i ../images/nginx-ingress-controller-0.29.0.tar
-docker load -i ../images/kubernetesui-dashboard-v2.0.0-rc5.tar
-docker load -i ../images/kubernetesui-metrics-scraper-v1.0.3.tar
-
+. ./loadimage.sh
 
 
 if [ ${#POD_SUBNET} -eq 0 ] || [ ${#APISERVER_NAME} -eq 0 ]; then
@@ -68,3 +52,8 @@ kubectl apply -f ../plugins/ingress-nginx-v0.29.0.yaml
 # 安装 Dashboard
 echo "安装 Dashboard"
 kubectl apply -f ../plugins/dashboard-v2.0.0-rc5.yaml
+
+# 安装 Kuboard
+echo "安装 Kuboard"
+kubectl apply -f ../plugins/kuboard.yaml
+kubectl apply -f ../plugins/metrics-server-v0.3.6.yaml

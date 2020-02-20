@@ -188,7 +188,6 @@ spec:
       containers:
         - name: kubernetes-dashboard
           image: kubernetesui/dashboard:v2.0.0-rc5
-          # 为了内网能正常运行，所以禁止每次运行都重新pull image 
           # imagePullPolicy: Always
           ports:
             - containerPort: 8443
