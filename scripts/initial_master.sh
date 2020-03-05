@@ -51,6 +51,7 @@ kubectl apply -f ../plugins/ingress-nginx-v0.29.0.yaml
 
 # 安装 Dashboard
 echo "安装 Dashboard"
+kubectl apply -f ../plugins/dashboard-auth.yaml
 kubectl apply -f ../plugins/dashboard-v2.0.0-rc5.yaml
 
 # 安装 Kuboard
